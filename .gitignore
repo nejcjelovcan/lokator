@@ -1,0 +1,4 @@
+env
+/static/
+*.pyc
+settings_local.py

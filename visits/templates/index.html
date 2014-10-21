@@ -1,0 +1,59 @@
+{% extends "base.html" %}{% load static %}{% load humanize %}
+
+{% block head %}
+    {% if user.is_anonymous %}
+        <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.6/js/foundation.min.js"></script>
+    {% else %}
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.0/leaflet.awesome-markers.css" type="text/css" media="screen" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.0/leaflet.awesome-markers.min.js"></script>
+    {% endif %}
+    <link rel="stylesheet" href="{% static "visits/css/index.css" %}" type="text/css" media="screen" />
+    <script src="{% static "visits/js/index.js" %}"></script>
+{% endblock head %}
+
+{% block content %}
+    <div class="row">
+        <div class="small-12 columns">
+            {% if user.is_anonymous %}
+
+                <h3 class="subheader">{{subheader}}</h3>
+                <div>
+                    Login via Twitter to view a map of visitors! Yay!
+                <div>
+                <br/>
+                <a class="button large expand" href="#" data-reveal-id="socialModal">Get to the map!</a>
+                <img src="{% static "visits/img/map.png" %}" />
+                <div id="socialModal" class="reveal-modal" data-reveal>
+                    <h2>Login via Twitter</h2>
+                    <p class="lead">By proceeding you agree to share your location with other users!</p>
+                    <a class="button large expand" href="{% url "social:begin" "twitter" %}"><i class="fa fa-twitter"></i> Login</a>
+                    <a class="close-reveal-modal">&#215;</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if not user.is_anonymous %}
+        <div class="row fullWidth">
+            <div id="map" class="small-12 columns">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 medium-6 columns">
+                <h3>Here now <i class="fa fa-map-marker" style="color: #D63E2A"></i></h3>
+                <div class="visitorLocations">
+                    {% autoescape off %}{{visitorLocations}}{% endautoescape %}
+                </div>
+                <br/>
+            </div>
+            <div class="small-12 medium-6 columns">
+                <h3>Visitors last 24h <i class="fa fa-map-marker" style="color: #38A9DC"></i></h3>
+                <div class="dayVisits">
+                    {% autoescape off %}{{dayVisits}}{% endautoescape %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

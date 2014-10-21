@@ -1,0 +1,44 @@
+{% load static %}<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lokator</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.6/css/foundation.min.css" type="text/css" media="screen" />
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+      {% block navigation %}
+        <nav class="top-bar" data-topbar="">
+          <ul class="title-area">
+            <li class="name">
+              <h1><a href="?">Lokator</a></h1>
+            </li>
+          </ul>
+
+          <section class="top-bar-section">
+            <ul class="right">
+              {% if user.is_anonymous %}
+                <li class="active">
+                  <a href="#" data-reveal-id="socialModal">Fun <i class="fa fa-arrow-right"></i></a>
+                </li>
+              {% else %}
+                <li><a href="{% url "logout" %}">{{user.username}} <i class="fa fa-sign-out"></i></a></li>
+              {% endif %}
+            </ul>
+          </section>
+        </nav>
+      {% endblock %}
+
+      {% block content %}
+      {% endblock %}
+    {% endblock %}
+  </body>
+</html>

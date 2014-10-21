@@ -1,0 +1,6 @@
+{% for visit in visits %}
+    <div>
+        <span class="radius secondary label right">{{visit.time}}</span>
+        {{visit.username}}, {{visit.address}}
+    </div>
+{% endfor %}
